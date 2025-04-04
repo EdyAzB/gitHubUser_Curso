@@ -24,7 +24,7 @@ try{
    let response = await this.userService.getUserByName(name);
    this.arrUsers = response.items.slice(1,11); 
  }catch(err){
-  console.error(err)
+  console.log("introduce el nombre");
  }
 }
   }
