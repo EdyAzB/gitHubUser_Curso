@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output, output } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms'
 import { UserService } from '../../servicios/user.service';
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -10,18 +11,19 @@ import { UserService } from '../../servicios/user.service';
 })
 export class HeaderComponent {
   searchForm: FormGroup
- private userService = inject(UserService)
-  
+
+  @Output() nombreEmitido: EventEmitter<string>; 
  constructor() {
+    this.nombreEmitido = new EventEmitter();
     this.searchForm = new FormGroup(
       {
         name : new FormControl ('',[])
 
-    },[])
+    },[]) 
   }
-   async getData(): Promise<void> {
-    let name = this.searchForm.value.name;
-    let response = await this.userService.getUserByName(name);
-  }
+  getData():void{
+
+ this.nombreEmitido.emit(this.searchForm.value.name)
 }
-   
+
+}

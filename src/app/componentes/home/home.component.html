@@ -1,6 +1,18 @@
 <header class="bg-dark p-3 text-white shadow">
-    <app-header/>
+    <app-header (nombreEmitido)="getUsers($event)"/>
 </header>
 <main>
-     <p>contenido </p>
-</main> 
+    <section class="container mt-3">
+      <h1>Listado de Usuarios</h1>
+      <hr />
+    @if (arrUsers.length !== 0) {
+      <ul>
+        @for (user of arrUsers; track user.id) {
+          <li [routerLink]="['/user', user.login]"><i class="fa-solid fa-id-card"></i> Nombre del Usuario: {{ user.login }}  - <i class="fa-solid fa-passport"></i> Id del suario: {{ user.id }}</li>
+        }
+      </ul>
+    } @else {
+      <p>No hay resultados de búsqueda</p>
+    }
+    </section>
+  </main>
