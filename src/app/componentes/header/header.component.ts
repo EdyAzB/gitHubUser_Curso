@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms'
+import { UserService } from '../../servicios/user.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -9,15 +10,18 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms'
 })
 export class HeaderComponent {
   searchForm: FormGroup
-
-  constructor() {
+ private userService = inject(UserService)
+  
+ constructor() {
     this.searchForm = new FormGroup(
       {
         name : new FormControl ('',[])
 
     },[])
   }
-  getData(): void{
-     console.log(this.searchForm.value);
+   async getData(): Promise<void> {
+    let name = this.searchForm.value.name;
+    let response = await this.userService.getUserByName(name);
   }
 }
+   
